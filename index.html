@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jalo Shops</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300;12..96,400;12..96,500;12..96,700;12..96,800&family=Outfit:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --ink:#080808;
+  --paper:#F5F2ED;
+  --white:#FFFFFF;
+  --green:#1C4532;
+  --green-mid:#2D6A4F;
+  --green-bright:#52B788;
+  --gold:#C9A84C;
+  --gold-light:#E8C96A;
+  --muted-ink:rgba(8,8,8,0.45);
+  --muted-paper:rgba(245,242,237,0.55);
+  --f-display:'Bricolage Grotesque',system-ui,sans-serif;
+  --f-body:'Outfit',system-ui,sans-serif;
+  --ease:cubic-bezier(0.16,1,0.3,1);
+}
+html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased}
+body{background:var(--ink);color:var(--paper);font-family:var(--f-body);font-size:17px;line-height:1.55;overflow-x:hidden;cursor:none}
+
+.cursor{position:fixed;width:10px;height:10px;background:var(--paper);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:width .25s var(--ease),height .25s var(--ease);mix-blend-mode:difference}
+.cursor.hover{width:40px;height:40px}
+
+nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:1.4rem 2.5rem;transition:background .5s,backdrop-filter .5s}
+nav.bg{background:rgba(8,8,8,0.78);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px)}
+.nav-logo{font-family:var(--f-display);font-size:1.15rem;font-weight:800;letter-spacing:-0.02em;color:var(--paper);text-decoration:none}
+.nav-logo sup{font-size:.45em;font-weight:500;letter-spacing:.08em;vertical-align:super;color:var(--green-bright)}
+.nav-links{display:flex;align-items:center;gap:2.25rem;list-style:none}
+.nav-links a{font-size:.8rem;font-weight:500;letter-spacing:.04em;color:rgba(245,242,237,.55);text-decoration:none;transition:color .2s}
+.nav-links a:hover{color:var(--paper)}
+.nav-btn{background:var(--paper);color:var(--ink);font-family:var(--f-body);font-size:.78rem;font-weight:500;padding:.55rem 1.35rem;border-radius:100px;text-decoration:none;letter-spacing:.02em;transition:background .2s,transform .2s var(--ease);display:inline-flex;align-items:center;gap:.4rem}
+.nav-btn:hover{background:var(--gold-light);transform:scale(1.03)}
+
+/* HERO */
+.hero{min-height:100svh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:10rem 2rem 5rem;position:relative;overflow:hidden;background:var(--ink)}
+.hero-eyebrow{display:inline-flex;align-items:center;gap:.6rem;font-size:.72rem;font-weight:500;letter-spacing:.16em;text-transform:uppercase;color:var(--green-bright);margin-bottom:2.5rem;opacity:0;animation:rise .9s var(--ease) .1s forwards}
+.hero-eyebrow-dot{width:5px;height:5px;border-radius:50%;background:var(--green-bright);animation:pulse 2s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.8)}}
+.hero-headline{font-family:var(--f-display);font-size:clamp(3.8rem,10vw,9.5rem);font-weight:800;line-height:.94;letter-spacing:-0.035em;color:var(--paper);max-width:18ch;opacity:0;animation:rise .9s var(--ease) .25s forwards}
+.hero-headline .line-accent{display:block;background:linear-gradient(95deg,var(--gold) 0%,var(--green-bright) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero-sub{font-size:1.1rem;font-weight:300;color:rgba(245,242,237,.5);max-width:44ch;line-height:1.7;margin:2.25rem auto 3rem;opacity:0;animation:rise .9s var(--ease) .4s forwards}
+.hero-actions{display:flex;align-items:center;gap:1rem;flex-wrap:wrap;justify-content:center;opacity:0;animation:rise .9s var(--ease) .55s forwards}
+.btn-fill{display:inline-flex;align-items:center;gap:.5rem;background:var(--paper);color:var(--ink);font-family:var(--f-body);font-size:.88rem;font-weight:500;padding:.85rem 2rem;border-radius:100px;text-decoration:none;letter-spacing:.01em;transition:background .2s,transform .2s var(--ease),box-shadow .2s}
+.btn-fill:hover{background:var(--gold-light);transform:translateY(-2px);box-shadow:0 16px 40px rgba(201,168,76,.25)}
+.btn-line{display:inline-flex;align-items:center;gap:.5rem;background:transparent;color:var(--paper);font-family:var(--f-body);font-size:.88rem;font-weight:400;padding:.85rem 1.75rem;border-radius:100px;text-decoration:none;letter-spacing:.01em;border:1px solid rgba(245,242,237,.2);transition:border-color .2s,background .2s}
+.btn-line:hover{border-color:rgba(245,242,237,.5);background:rgba(245,242,237,.05)}
+
+/* PHONE MOCKUP */
+.hero-device{position:relative;margin-top:5rem;opacity:0;animation:rise-slow 1.2s var(--ease) .7s forwards;width:min(300px,78vw)}
+@keyframes rise-slow{from{opacity:0;transform:translateY(60px)}to{opacity:1;transform:translateY(0)}}
+.phone-frame{background:#141414;border:1.5px solid rgba(255,255,255,.1);border-radius:40px;padding:12px;box-shadow:0 0 0 1px rgba(255,255,255,.06),0 80px 120px rgba(0,0,0,.9),0 40px 60px rgba(0,0,0,.6),inset 0 1px 0 rgba(255,255,255,.1)}
+.phone-notch{width:90px;height:26px;background:#080808;border-radius:20px;margin:0 auto 10px;display:flex;align-items:center;justify-content:center}
+.phone-notch::after{content:'';width:10px;height:10px;background:#1a1a1a;border-radius:50%;outline:2px solid #111}
+.phone-screen{background:#0d1f17;border-radius:30px;overflow:hidden;padding:0 0 4px}
+.pscreen-top{background:var(--green);padding:16px 16px 12px;display:flex;align-items:center;justify-content:space-between}
+.pscreen-top-label{font-size:10px;font-weight:500;color:rgba(255,255,255,.5);font-family:var(--f-display);letter-spacing:.04em}
+.pscreen-top-val{font-family:var(--f-display);font-size:20px;font-weight:700;color:#fff}
+.pscreen-top-sub{font-size:9px;color:rgba(255,255,255,.5)}
+.pscreen-stats{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:rgba(255,255,255,.06);border-top:1px solid rgba(255,255,255,.06)}
+.pstat{background:#0d1f17;padding:10px 14px}
+.pstat-n{font-family:var(--f-display);font-size:16px;font-weight:700;color:#fff}
+.pstat-l{font-size:9px;color:rgba(255,255,255,.4);margin-top:2px}
+.pscreen-orders{padding:12px 14px}
+.porder-title{font-size:9px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.35);margin-bottom:8px;font-family:var(--f-display)}
+.porder-row{display:flex;align-items:center;justify-content:space-between;padding:7px 0;border-bottom:1px solid rgba(255,255,255,.05)}
+.porder-row:last-child{border-bottom:none}
+.porder-name{font-size:11px;font-weight:400;color:rgba(255,255,255,.8)}
+.porder-sub{font-size:9px;color:rgba(255,255,255,.3);margin-top:1px}
+.porder-amt{font-size:12px;font-weight:600;color:var(--green-bright);font-family:var(--f-display)}
+.porder-dot{width:6px;height:6px;border-radius:50%;margin-left:8px;flex-shrink:0;background:var(--green-bright)}
+.porder-dot.pending{background:var(--gold)}
+.pscreen-bar{display:flex;gap:2px;padding:0 14px 12px;height:44px;align-items:flex-end}
+.pbar{flex:1;background:var(--green-mid);border-radius:3px 3px 0 0;opacity:.6}
+.pbar.hi{background:var(--green-bright);opacity:1}
+.hero-device-glow{position:absolute;bottom:-40px;left:50%;transform:translateX(-50%);width:200px;height:80px;background:radial-gradient(ellipse,rgba(82,183,136,.3) 0%,transparent 70%);filter:blur(20px);pointer-events:none}
+
+@keyframes rise{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
+
+/* PROOF STRIP */
+.proof{background:#0f0f0f;border-top:1px solid rgba(255,255,255,.06);border-bottom:1px solid rgba(255,255,255,.06);padding:1.75rem 2.5rem;display:flex;align-items:center;gap:3rem;overflow:hidden}
+.proof-label{font-size:.68rem;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:rgba(245,242,237,.25);white-space:nowrap;flex-shrink:0}
+.proof-track{overflow:hidden;flex:1}
+.proof-logos{display:flex;align-items:center;gap:0;animation:scroll-x 22s linear infinite;white-space:nowrap;width:max-content}
+.proof-pill{font-size:.76rem;font-weight:500;letter-spacing:.04em;color:rgba(245,242,237,.38);padding:.32rem .9rem;border:1px solid rgba(255,255,255,.08);border-radius:100px;white-space:nowrap;margin:0 .4rem;transition:color .2s,border-color .2s}
+@keyframes scroll-x{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* STATEMENT */
+.statement{padding:10rem 2.5rem;text-align:center;background:var(--paper)}
+.statement-text{font-family:var(--f-display);font-size:clamp(2.6rem,6vw,5.5rem);font-weight:800;line-height:1.05;letter-spacing:-0.03em;color:var(--ink);max-width:22ch;margin:0 auto}
+.statement-text .hl{color:var(--green)}
+.statement-body{font-size:1.05rem;font-weight:300;color:rgba(8,8,8,.5);max-width:50ch;margin:2.5rem auto 0;line-height:1.8}
+
+/* SPLITS */
+.split{display:grid;grid-template-columns:1fr 1fr;min-height:80vh;align-items:stretch}
+.split.flip{direction:rtl}
+.split.flip>*{direction:ltr}
+.split-text{display:flex;flex-direction:column;justify-content:center;padding:6rem 5rem}
+.split-eyebrow{font-size:.68rem;font-weight:500;letter-spacing:.14em;text-transform:uppercase;margin-bottom:1.5rem;display:flex;align-items:center;gap:.6rem}
+.split-eyebrow::before{content:'';width:20px;height:1px;background:currentColor;opacity:.4}
+.split-h{font-family:var(--f-display);font-size:clamp(2.2rem,4vw,3.6rem);font-weight:800;line-height:1.05;letter-spacing:-0.03em;margin-bottom:1.5rem}
+.split-body{font-size:.95rem;font-weight:300;line-height:1.8;opacity:.6;max-width:42ch}
+.split-link{display:inline-flex;align-items:center;gap:.5rem;font-size:.85rem;font-weight:500;margin-top:2.5rem;text-decoration:none;transition:gap .2s var(--ease)}
+.split-link svg{transition:transform .2s var(--ease)}
+.split-link:hover{gap:.85rem}
+.split-link:hover svg{transform:translateX(3px)}
+.split-visual{display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
+.split.dark .split-text{background:var(--ink);color:var(--paper)}
+.split.dark .split-eyebrow{color:var(--green-bright)}
+.split.dark .split-link{color:var(--green-bright)}
+.split.dark .split-visual{background:#0f0f0f}
+.split.light .split-text{background:var(--paper);color:var(--ink)}
+.split.light .split-eyebrow{color:var(--green)}
+.split.light .split-link{color:var(--green)}
+.split.light .split-visual{background:#ECEAE5}
+
+/* DASHBOARD MOCKUP */
+.dash-mock{width:min(400px,88%);background:#fff;border-radius:14px;box-shadow:0 40px 100px rgba(0,0,0,.22),0 10px 30px rgba(0,0,0,.12);overflow:hidden}
+.dash-bar{background:#F7F6F3;border-bottom:1px solid #ECEAE5;padding:10px 14px;display:flex;align-items:center;gap:8px}
+.dash-dot{width:10px;height:10px;border-radius:50%}
+.dash-dots{display:flex;gap:6px}
+.dash-url{flex:1;background:#ECEAE5;border-radius:6px;padding:4px 10px;font-size:10px;color:#888;text-align:center}
+.dash-body{padding:18px}
+.dash-toprow{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
+.dash-store-name{font-family:var(--f-display);font-size:14px;font-weight:700;color:#111}
+.dash-badge{font-size:9px;font-weight:600;padding:3px 9px;border-radius:100px;background:#D1FAE5;color:#065F46;letter-spacing:.04em}
+.dash-metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:16px}
+.dash-metric{background:#F7F6F3;border-radius:9px;padding:10px}
+.dash-metric-v{font-family:var(--f-display);font-size:18px;font-weight:700;color:#111}
+.dash-metric-l{font-size:9px;color:#999;margin-top:2px}
+.dash-metric-d{font-size:9px;font-weight:600;margin-top:3px}
+.dash-metric-d.up{color:#059669}
+.dash-orders-title{font-size:10px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:#999;margin-bottom:8px;font-family:var(--f-display)}
+.dash-order{display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid #F0EFEB}
+.dash-order:last-child{border-bottom:none}
+.dash-order-av{width:30px;height:30px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#fff;flex-shrink:0}
+.dash-order-name{font-size:11px;font-weight:500;color:#111}
+.dash-order-meta{font-size:9px;color:#999;margin-top:1px}
+.dash-order-amt{font-size:12px;font-weight:600;color:#111;margin-left:auto}
+.dash-order-status{font-size:9px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;padding:2px 7px;border-radius:100px;margin-left:6px}
+.dash-order-status.livr{background:#D1FAE5;color:#065F46}
+.dash-order-status.enc{background:#FEF3C7;color:#92400E}
+
+/* CATALOG MOCKUP */
+.catalog-mock{width:min(360px,88%);display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.cat-card{background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 4px 20px rgba(0,0,0,.1);transition:transform .3s var(--ease)}
+.cat-card:hover{transform:translateY(-4px)}
+.cat-img{height:90px;display:flex;align-items:center;justify-content:center;font-size:1.9rem}
+.cat-info{padding:9px}
+.cat-name{font-size:10px;font-weight:600;color:#111;font-family:var(--f-display)}
+.cat-price{font-size:12px;font-weight:700;color:var(--green);margin-top:2px;font-family:var(--f-display)}
+.cat-stock{font-size:9px;color:#999;margin-top:1px}
+.cat-card.feat{grid-column:span 2}
+.cat-card.feat .cat-img{height:70px}
+.cat-card.feat .cat-info{display:flex;align-items:center;justify-content:space-between}
+
+/* NUMBERS */
+.numbers{background:var(--green);padding:8rem 2.5rem}
+.numbers-inner{max-width:1100px;margin:0 auto}
+.numbers-head{font-family:var(--f-display);font-size:.75rem;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:rgba(245,242,237,.35);margin-bottom:5rem}
+.numbers-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:2px}
+.num-block{padding:3rem 2rem;border-left:1px solid rgba(255,255,255,.1);opacity:0;transform:translateY(20px);transition:opacity .6s var(--ease),transform .6s var(--ease)}
+.num-block.visible{opacity:1;transform:translateY(0)}
+.num-block:nth-child(2){transition-delay:.08s}
+.num-block:nth-child(3){transition-delay:.16s}
+.num-block:nth-child(4){transition-delay:.24s}
+.num-val{font-family:var(--f-display);font-size:clamp(3.2rem,5.5vw,5.5rem);font-weight:800;line-height:1;letter-spacing:-0.03em;color:var(--paper)}
+.num-unit{font-size:.45em;font-weight:500;vertical-align:super;color:var(--green-bright)}
+.num-label{font-size:.78rem;font-weight:400;color:rgba(245,242,237,.45);margin-top:.75rem;line-height:1.5}
+
+/* PAYMENTS */
+.payments{background:var(--paper);padding:8rem 2.5rem;text-align:center}
+.payments-inner{max-width:800px;margin:0 auto}
+.payments-h{font-family:var(--f-display);font-size:clamp(2.8rem,5.5vw,5rem);font-weight:800;line-height:1.05;letter-spacing:-0.03em;color:var(--ink);margin-bottom:1.5rem}
+.payments-h .hl{color:var(--green)}
+.payments-sub{font-size:1rem;color:rgba(8,8,8,.5);font-weight:300;line-height:1.7;max-width:44ch;margin:0 auto 4rem}
+.pay-grid{display:flex;flex-wrap:wrap;gap:.75rem;justify-content:center}
+.pay-chip{display:inline-flex;align-items:center;gap:.5rem;background:#fff;border:1px solid #E0DDD8;border-radius:100px;padding:.55rem 1.25rem;font-size:.82rem;font-weight:500;color:var(--ink);box-shadow:0 2px 8px rgba(0,0,0,.05);transition:border-color .2s,box-shadow .2s,transform .2s var(--ease)}
+.pay-chip:hover{border-color:var(--green);box-shadow:0 4px 16px rgba(28,69,50,.15);transform:translateY(-2px)}
+.pay-chip-dot{width:8px;height:8px;border-radius:50%;background:var(--green-bright)}
+
+/* PRICING */
+.pricing{background:var(--ink);padding:8rem 2.5rem}
+.pricing-inner{max-width:1100px;margin:0 auto}
+.pricing-top{text-align:center;margin-bottom:5rem}
+.pricing-h{font-family:var(--f-display);font-size:clamp(2.8rem,5.5vw,5rem);font-weight:800;line-height:1.05;letter-spacing:-0.03em;color:var(--paper);margin-bottom:1rem}
+.pricing-sub{font-size:1rem;color:rgba(245,242,237,.4);font-weight:300}
+.pricing-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5px;background:rgba(255,255,255,.06);border:1.5px solid rgba(255,255,255,.06);border-radius:20px;overflow:hidden}
+.pcol{background:var(--ink);padding:2.5rem 2rem;opacity:0;transform:translateY(24px);transition:opacity .6s var(--ease),transform .6s var(--ease),background .3s}
+.pcol.visible{opacity:1;transform:translateY(0)}
+.pcol:nth-child(2){transition-delay:.08s}
+.pcol:nth-child(3){transition-delay:.16s}
+.pcol:hover{background:#0f0f0f}
+.pcol.featured{background:#0f1a14}
+.pcol.featured:hover{background:#111e17}
+.pcol-tag{font-size:.65rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:rgba(245,242,237,.3);margin-bottom:2rem}
+.pcol.featured .pcol-tag{color:var(--green-bright)}
+.pcol-price{font-family:var(--f-display);font-size:3.2rem;font-weight:800;line-height:1;letter-spacing:-0.03em;color:var(--paper);margin-bottom:.5rem}
+.pcol-price small{font-size:1rem;font-weight:400;opacity:.4;font-family:var(--f-body)}
+.pcol-desc{font-size:.84rem;color:rgba(245,242,237,.4);font-weight:300;margin-bottom:2rem;line-height:1.6}
+.pcol-divider{height:1px;background:rgba(255,255,255,.07);margin-bottom:2rem}
+.pcol-features{list-style:none;display:flex;flex-direction:column;gap:.85rem;margin-bottom:2.5rem}
+.pcol-features li{display:flex;align-items:flex-start;gap:.75rem;font-size:.83rem;color:rgba(245,242,237,.65);font-weight:300;line-height:1.5}
+.check{width:16px;height:16px;border-radius:50%;background:rgba(82,183,136,.15);border:1px solid rgba(82,183,136,.3);display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px}
+.check svg{width:9px;height:9px}
+.pcol-btn{display:block;text-align:center;text-decoration:none;font-family:var(--f-body);font-size:.85rem;font-weight:500;letter-spacing:.02em;padding:.8rem 1.5rem;border-radius:100px;transition:background .2s,color .2s,transform .2s var(--ease)}
+.pcol-btn-outline{border:1px solid rgba(255,255,255,.15);color:var(--paper)}
+.pcol-btn-outline:hover{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.3)}
+.pcol-btn-fill{background:var(--green-bright);color:var(--ink);border:1px solid transparent}
+.pcol-btn-fill:hover{background:#6DD4A0;transform:translateY(-1px)}
+
+/* BIG CTA */
+.bigcta{background:var(--paper);padding:10rem 2.5rem;text-align:center}
+.bigcta-inner{max-width:900px;margin:0 auto}
+.bigcta-h{font-family:var(--f-display);font-size:clamp(3.5rem,8vw,8rem);font-weight:800;line-height:.96;letter-spacing:-0.04em;color:var(--ink);margin-bottom:3rem}
+.bigcta-h .outline{-webkit-text-stroke:2px var(--ink);color:transparent}
+.bigcta-actions{display:flex;align-items:center;justify-content:center;gap:1rem;flex-wrap:wrap}
+.btn-dark{display:inline-flex;align-items:center;gap:.5rem;background:var(--ink);color:var(--paper);font-family:var(--f-body);font-size:.88rem;font-weight:500;padding:.9rem 2rem;border-radius:100px;text-decoration:none;transition:background .2s,transform .2s var(--ease)}
+.btn-dark:hover{background:#222;transform:translateY(-2px)}
+.btn-green{display:inline-flex;align-items:center;gap:.5rem;background:var(--green);color:var(--paper);font-family:var(--f-body);font-size:.88rem;font-weight:500;padding:.9rem 2rem;border-radius:100px;text-decoration:none;transition:background .2s,transform .2s var(--ease)}
+.btn-green:hover{background:var(--green-mid);transform:translateY(-2px)}
+
+/* FOOTER */
+footer{background:#050505;border-top:1px solid rgba(255,255,255,.06);padding:3.5rem 2.5rem}
+.footer-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:2rem}
+.footer-brand{font-family:var(--f-display);font-size:1rem;font-weight:800;color:var(--paper);letter-spacing:-0.02em}
+.footer-brand sup{font-size:.45em;font-weight:500;color:var(--green-bright);vertical-align:super;letter-spacing:.08em}
+.footer-copy{font-size:.73rem;color:rgba(245,242,237,.22);letter-spacing:.04em}
+.footer-links{display:flex;gap:2rem;list-style:none}
+.footer-links a{font-size:.73rem;color:rgba(245,242,237,.28);text-decoration:none;letter-spacing:.04em;transition:color .2s}
+.footer-links a:hover{color:rgba(245,242,237,.7)}
+
+/* SCROLL REVEAL */
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .8s var(--ease),transform .8s var(--ease)}
+.reveal.d1{transition-delay:.1s}
+.reveal.d2{transition-delay:.2s}
+.reveal.visible{opacity:1;transform:translateY(0)}
+
+/* RESPONSIVE */
+@media(max-width:960px){
+  nav{padding:1.1rem 1.5rem}
+  .nav-links{display:none}
+  .split{grid-template-columns:1fr;min-height:auto}
+  .split.flip{direction:ltr}
+  .split-text{padding:4rem 2rem}
+  .split-visual{min-height:300px}
+  .numbers-grid{grid-template-columns:1fr 1fr}
+  .pricing-grid{grid-template-columns:1fr}
+  .bigcta-h{font-size:clamp(3rem,12vw,5rem)}
+  .footer-inner{flex-direction:column;align-items:flex-start}
+  body{cursor:auto}
+  .cursor{display:none}
+}
+@media(max-width:600px){
+  .hero{padding:8rem 1.5rem 4rem}
+  .hero-headline{font-size:clamp(2.8rem,15vw,5rem)}
+  .numbers-grid{grid-template-columns:1fr}
+  .statement{padding:6rem 1.5rem}
+}
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+
+<!-- NAV -->
+<nav id="nav">
+  <a href="#" class="nav-logo">Jalo Shops<sup>BETA</sup></a>
+  <ul class="nav-links">
+    <li><a href="#features">Fonctionnalités</a></li>
+    <li><a href="#pricing">Tarifs</a></li>
+    <li><a href="#">Se connecter</a></li>
+    <li><a href="#pricing" class="nav-btn">Commencer <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 12 12"><line x1="2" y1="6" x2="10" y2="6"/><polyline points="7,3 10,6 7,9"/></svg></a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-eyebrow"><span class="hero-eyebrow-dot"></span>Lancé en 2026 · Abidjan, Côte d'Ivoire</div>
+  <h1 class="hero-headline">
+    Votre boutique.<br>
+    <span class="line-accent">L'Afrique vend.</span>
+  </h1>
+  <p class="hero-sub">Une plateforme e-commerce conçue pour le commerce africain. Vos règles, vos prix, vos clients — livrés par Jalo Logistics.</p>
+  <div class="hero-actions">
+    <a href="#pricing" class="btn-fill">
+      Ouvrir ma boutique
+      <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 14 14"><line x1="2" y1="7" x2="12" y2="7"/><polyline points="8,3 12,7 8,11"/></svg>
+    </a>
+    <a href="#features" class="btn-line">Voir la démo</a>
+  </div>
+  <div class="hero-device">
+    <div class="phone-frame">
+      <div class="phone-notch"></div>
+      <div class="phone-screen">
+        <div class="pscreen-top">
+          <div>
+            <div class="pscreen-top-label">Ventes aujourd'hui</div>
+            <div class="pscreen-top-val">487 500 F</div>
+            <div class="pscreen-top-sub">+23% vs hier</div>
+          </div>
+          <div style="text-align:right">
+            <div class="pscreen-top-label">Boutique</div>
+            <div style="font-size:10px;color:#52B788;font-weight:600;margin-top:4px">● Active</div>
+          </div>
+        </div>
+        <div class="pscreen-stats">
+          <div class="pstat"><div class="pstat-n">34</div><div class="pstat-l">Commandes</div></div>
+          <div class="pstat"><div class="pstat-n">128</div><div class="pstat-l">Produits actifs</div></div>
+        </div>
+        <div class="pscreen-orders">
+          <div class="porder-title">Commandes récentes</div>
+          <div class="porder-row">
+            <div><div class="porder-name">Koné Mariam</div><div class="porder-sub">Wave · il y a 4 min</div></div>
+            <div style="display:flex;align-items:center"><div class="porder-amt">12 500 F</div><div class="porder-dot"></div></div>
+          </div>
+          <div class="porder-row">
+            <div><div class="porder-name">Traoré Ibrahim</div><div class="porder-sub">MTN · il y a 18 min</div></div>
+            <div style="display:flex;align-items:center"><div class="porder-amt">38 000 F</div><div class="porder-dot pending"></div></div>
+          </div>
+          <div class="porder-row">
+            <div><div class="porder-name">Bamba Awa</div><div class="porder-sub">Orange · il y a 1h</div></div>
+            <div style="display:flex;align-items:center"><div class="porder-amt">7 200 F</div><div class="porder-dot"></div></div>
+          </div>
+        </div>
+        <div class="pscreen-bar">
+          <div class="pbar" style="height:35%"></div>
+          <div class="pbar" style="height:55%"></div>
+          <div class="pbar" style="height:45%"></div>
+          <div class="pbar" style="height:70%"></div>
+          <div class="pbar" style="height:60%"></div>
+          <div class="pbar hi" style="height:90%"></div>
+          <div class="pbar" style="height:75%"></div>
+        </div>
+      </div>
+    </div>
+    <div class="hero-device-glow"></div>
+  </div>
+</section>
+
+<!-- PROOF -->
+<div class="proof">
+  <div class="proof-label">Paiements intégrés</div>
+  <div class="proof-track">
+    <div class="proof-logos">
+      <span class="proof-pill">Orange Money</span><span class="proof-pill">MTN Money</span><span class="proof-pill">Wave</span><span class="proof-pill">Moov Money</span><span class="proof-pill">Cinetpay</span><span class="proof-pill">FedaPay</span><span class="proof-pill">PayDunya</span><span class="proof-pill">Paiement à la livraison</span><span class="proof-pill">Carte bancaire</span>
+      <span class="proof-pill">Orange Money</span><span class="proof-pill">MTN Money</span><span class="proof-pill">Wave</span><span class="proof-pill">Moov Money</span><span class="proof-pill">Cinetpay</span><span class="proof-pill">FedaPay</span><span class="proof-pill">PayDunya</span><span class="proof-pill">Paiement à la livraison</span><span class="proof-pill">Carte bancaire</span>
+    </div>
+  </div>
+</div>
+
+<!-- STATEMENT -->
+<div class="statement">
+  <p class="statement-text reveal">Le commerce africain mérite une plateforme <span class="hl">à sa hauteur.</span></p>
+  <p class="statement-body reveal d1">Pas une adaptation d'un outil conçu ailleurs. Une solution bâtie pour les commerçants d'ici — avec les paiements mobiles, les habitudes d'achat et la logistique qui font notre réalité.</p>
+</div>
+
+<!-- FEATURE SPLITS -->
+<div id="features">
+
+  <div class="split dark">
+    <div class="split-text">
+      <div class="split-eyebrow">Tableau de bord</div>
+      <h2 class="split-h">Tout votre commerce. Une seule vue.</h2>
+      <p class="split-body">Commandes en temps réel, stock, chiffre d'affaires, clients — votre activité entière lisible en un coup d'œil, depuis votre téléphone ou votre ordinateur.</p>
+      <a href="#" class="split-link">Explorer le tableau de bord <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 14 14"><line x1="2" y1="7" x2="12" y2="7"/><polyline points="8,3 12,7 8,11"/></svg></a>
+    </div>
+    <div class="split-visual">
+      <div class="dash-mock">
+        <div class="dash-bar">
+          <div class="dash-dots"><div class="dash-dot" style="background:#FF5F57"></div><div class="dash-dot" style="background:#FFBD2E"></div><div class="dash-dot" style="background:#28CA41"></div></div>
+          <div class="dash-url">jaloshops.com/dashboard</div>
+        </div>
+        <div class="dash-body">
+          <div class="dash-toprow"><div class="dash-store-name">Boutique Kouyaté Mode</div><div class="dash-badge">En ligne</div></div>
+          <div class="dash-metrics">
+            <div class="dash-metric"><div class="dash-metric-v">1.2M</div><div class="dash-metric-l">Ventes / mois</div><div class="dash-metric-d up">↑ 18%</div></div>
+            <div class="dash-metric"><div class="dash-metric-v">247</div><div class="dash-metric-l">Commandes</div><div class="dash-metric-d up">↑ 34</div></div>
+            <div class="dash-metric"><div class="dash-metric-v">4.8★</div><div class="dash-metric-l">Note moy.</div><div class="dash-metric-d up">Excellent</div></div>
+          </div>
+          <div class="dash-orders-title">Dernières commandes</div>
+          <div class="dash-order"><div class="dash-order-av" style="background:#1C4532">KM</div><div><div class="dash-order-name">Koné Mariam</div><div class="dash-order-meta">Boubou gala · Wave</div></div><div class="dash-order-amt">24 000 F</div><div class="dash-order-status livr">Livré</div></div>
+          <div class="dash-order"><div class="dash-order-av" style="background:#92400E">TD</div><div><div class="dash-order-name">Touré Daouda</div><div class="dash-order-meta">Tissu wax × 3 · MTN</div></div><div class="dash-order-amt">67 500 F</div><div class="dash-order-status enc">En cours</div></div>
+          <div class="dash-order"><div class="dash-order-av" style="background:#065F46">AB</div><div><div class="dash-order-name">Aya Bamba</div><div class="dash-order-meta">Robe kabba · Orange</div></div><div class="dash-order-amt">18 000 F</div><div class="dash-order-status livr">Livré</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="split light flip">
+    <div class="split-text">
+      <div class="split-eyebrow">Catalogue & Stock</div>
+      <h2 class="split-h">Vos produits. Votre prix. Aucune commission imposée.</h2>
+      <p class="split-body">Publiez autant de produits que vous voulez. Variations, ruptures de stock, promotions — en totale autonomie, sans intermédiaire sur vos marges.</p>
+      <a href="#" class="split-link">Gérer mon catalogue <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 14 14"><line x1="2" y1="7" x2="12" y2="7"/><polyline points="8,3 12,7 8,11"/></svg></a>
+    </div>
+    <div class="split-visual">
+      <div class="catalog-mock">
+        <div class="cat-card feat">
+          <div class="cat-img" style="background:#FFF3E0">🧣</div>
+          <div class="cat-info"><div><div class="cat-name">Écharpe tissée Kente</div><div class="cat-price">15 000 F</div><div class="cat-stock">Stock : 42</div></div><div style="font-size:9px;font-weight:600;color:#059669;background:#D1FAE5;padding:3px 8px;border-radius:100px">Publié</div></div>
+        </div>
+        <div class="cat-card"><div class="cat-img" style="background:#E8F5E9">👗</div><div class="cat-info"><div class="cat-name">Robe Kabba</div><div class="cat-price">38 000 F</div><div class="cat-stock">Stock : 8</div></div></div>
+        <div class="cat-card"><div class="cat-img" style="background:#FFF8E1">🧢</div><div class="cat-info"><div class="cat-name">Chapeau Boubou</div><div class="cat-price">7 500 F</div><div class="cat-stock">Stock : 24</div></div></div>
+        <div class="cat-card"><div class="cat-img" style="background:#F3E5F5">👜</div><div class="cat-info"><div class="cat-name">Sac Bogolan</div><div class="cat-price">22 000 F</div><div class="cat-stock" style="color:#DC2626;font-weight:600">⚠ Stock bas : 3</div></div></div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- NUMBERS -->
+<section class="numbers">
+  <div class="numbers-inner">
+    <div class="numbers-head">Objectifs Jalo Shops · Année 1</div>
+    <div class="numbers-grid">
+      <div class="num-block"><div class="num-val">500<span class="num-unit">+</span></div><div class="num-label">Commerçants actifs sur la plateforme</div></div>
+      <div class="num-block"><div class="num-val">10<span class="num-unit">k</span></div><div class="num-label">Clients actifs dans l'écosystème</div></div>
+      <div class="num-block"><div class="num-val">24<span class="num-unit">h</span></div><div class="num-label">Délai de livraison intra-ville</div></div>
+      <div class="num-block"><div class="num-val">0<span class="num-unit">%</span></div><div class="num-label">Commission imposée sur vos prix de vente</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- PAYMENTS -->
+<section class="payments">
+  <div class="payments-inner">
+    <h2 class="payments-h reveal">Payez comme <span class="hl">vous voulez.</span></h2>
+    <p class="payments-sub reveal d1">Vos clients paient comme ils en ont l'habitude. Tout est intégré nativement, sans configuration manuelle.</p>
+    <div class="pay-grid reveal d2">
+      <div class="pay-chip"><span class="pay-chip-dot"></span>Orange Money</div>
+      <div class="pay-chip"><span class="pay-chip-dot"></span>MTN Money</div>
+      <div class="pay-chip"><span class="pay-chip-dot"></span>Wave</div>
+      <div class="pay-chip"><span class="pay-chip-dot"></span>Moov Money</div>
+      <div class="pay-chip"><span class="pay-chip-dot"></span>Cinetpay</div>
+      <div class="pay-chip"><span class="pay-chip-dot"></span>FedaPay</div>
+      <div class="pay-chip"><span class="pay-chip-dot"></span>PayDunya</div>
+      <div class="pay-chip"><span class="pay-chip-dot" style="background:#C59A2E"></span>Carte bancaire</div>
+      <div class="pay-chip"><span class="pay-chip-dot" style="background:#9CA3AF"></span>Paiement à la livraison</div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section class="pricing" id="pricing">
+  <div class="pricing-inner">
+    <div class="pricing-top">
+      <h2 class="pricing-h reveal">Choisissez votre plan.</h2>
+      <p class="pricing-sub reveal d1">Commencez gratuitement. Évoluez quand vous êtes prêt.</p>
+    </div>
+    <div class="pricing-grid">
+      <div class="pcol">
+        <div class="pcol-tag">Starter</div>
+        <div class="pcol-price">Gratuit</div>
+        <div class="pcol-desc">Pour tester la plateforme sans engagement.</div>
+        <div class="pcol-divider"></div>
+        <ul class="pcol-features">
+          <li><div class="check"><svg viewBox="0 0 9 9" fill="none"><polyline points="1.5,4.5 3.5,6.5 7.5,2.5" stroke="#52B788" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>Boutique personnalisée</li>
+          <li><div class="check"><svg viewBox="0 0 9 9" fill="none"><polyline points="1.5,4.5 3.5,6.5 7.5,2.5" stroke="#52B788" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>50 produits maximum</li>
+          <li><div class="check"><svg viewBox="0 0 9 9" fill="none"><polyline points="1.5,4.5 3.5,6.5 7.5,2.5" stroke="#52B788" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>Mobile Money + paiement à la livraison</li>
+          <li><div class="check"><svg viewBox="0 0 9 9" fill="none"><polyline points="1.5,4.5 3.5,6.5 7.5,2.5" stroke="#52B788" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>Tableau de bord basique</li>
+        </ul>
+        <a href="#" class="pcol-btn pcol-btn-outline">Commencer gratuitement</a>
+      </div>
+      <div class="pcol featured">
+        <div class="pcol-tag">Business · ✦ Recommandé</div>
+        <div class="pcol-price">Sur devis <small>/ mois</small></div>
+        <div class="pcol-desc">Pour les commerçants qui veulent croître sérieusement.</div>
+        <div class="pcol-divider"></div>
+        <ul class="pcol-features">
+          <li><div class="check"><svg viewBox="0 0 9 9" fill="none"><polyline points="1.5,4.5 3.5,6.5 7.5,2.5" stroke="#52B788" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>Produits illimités + variations</li>
+          <li><div class="check"><svg viewBox="0 0 9 9" fill="none"><polyline points="1.5,4.5 3.5,6.5 7.5,2.5" stroke="#52B788" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>CRM clients + segmentation</li>
+          <li><div class="check"><svg viewBox="0 0 9 9" fill="none"><polyline points="1.5,4.5 3.5,6.5 7.5,2.5" stroke="#52B788" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>Programme de fidélité personnalisable</li>
+          <li><div class="check"><svg viewBox="0 0 9 9" fill="none"><polyline points="1.5,4.5 3.5,6.5 7.5,2.5" stroke="#52B788" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>Grilles tarifaires VIP / grossistes</li>
+          <li><div class="check"><svg viewBox="0 0 9 9" fill="none"><polyline points="1.5,4.5 3.5,6.5 7.5,2.5" stroke="#52B788" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>Analytics avancée + notifications push</li>
+        </ul>
+        <a href="#" class="pcol-btn pcol-btn-fill">Demander une démo</a>
+      </div>
+      <div class="pcol">
+        <div class="pcol-tag">Enterprise</div>
+        <div class="pcol-price">Sur mesure</div>
+        <div class="pcol-desc">Pour les enseignes multi-boutiques et grands distributeurs.</div>
+        <div class="pcol-divider"></div>
+        <ul class="pcol-features">
+          <li><div class="check"><svg viewBox="0 0 9 9" fill="none"><polyline points="1.5,4.5 3.5,6.5 7.5,2.5" stroke="#52B788" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>Multi-boutiques centralisées</li>
+          <li><div class="check"><svg viewBox="0 0 9 9" fill="none"><polyline points="1.5,4.5 3.5,6.5 7.5,2.5" stroke="#52B788" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>API publique & intégrations ERP</li>
+          <li><div class="check"><svg viewBox="0 0 9 9" fill="none"><polyline points="1.5,4.5 3.5,6.5 7.5,2.5" stroke="#52B788" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>SLA 99,9% garanti</li>
+          <li><div class="check"><svg viewBox="0 0 9 9" fill="none"><polyline points="1.5,4.5 3.5,6.5 7.5,2.5" stroke="#52B788" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>Support prioritaire dédié + formation</li>
+        </ul>
+        <a href="#" class="pcol-btn pcol-btn-outline">Nous contacter</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BIG CTA -->
+<section class="bigcta">
+  <div class="bigcta-inner">
+    <h2 class="bigcta-h reveal">Votre boutique<br><span class="outline">ouvre demain.</span></h2>
+    <div class="bigcta-actions reveal d1">
+      <a href="#pricing" class="btn-dark">Commencer gratuitement <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 14 14"><line x1="2" y1="7" x2="12" y2="7"/><polyline points="8,3 12,7 8,11"/></svg></a>
+      <a href="#" class="btn-green">Parler à l'équipe</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div>
+      <div class="footer-brand">Jalo Shops<sup>BETA</sup></div>
+      <div class="footer-copy" style="margin-top:.5rem">Une initiative Jalo Logistics · NEEMBA Groupe · Abidjan, Côte d'Ivoire</div>
+    </div>
+    <ul class="footer-links">
+      <li><a href="#">Fonctionnalités</a></li>
+      <li><a href="#">Tarifs</a></li>
+      <li><a href="#">Confidentialité</a></li>
+      <li><a href="#">Contact</a></li>
+    </ul>
+    <div class="footer-copy">© 2026 Jalo Shops</div>
+  </div>
+</footer>
+
+<script>
+const cursor = document.getElementById('cursor');
+document.addEventListener('mousemove', e => {
+  cursor.style.left = e.clientX + 'px';
+  cursor.style.top = e.clientY + 'px';
+});
+document.querySelectorAll('a,button,.cat-card,.pay-chip,.proof-pill').forEach(el => {
+  el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
+  el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
+});
+
+const nav = document.getElementById('nav');
+window.addEventListener('scroll', () => nav.classList.toggle('bg', scrollY > 50), {passive:true});
+
+const io = new IntersectionObserver(entries => {
+  entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); });
+}, {threshold: 0.1, rootMargin:'0px 0px -40px 0px'});
+document.querySelectorAll('.reveal,.num-block,.pcol').forEach(el => io.observe(el));
+</script>
+</body>
+</html>
