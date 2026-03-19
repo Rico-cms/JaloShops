@@ -31,13 +31,21 @@ body{background:var(--ink);color:var(--paper);font-family:var(--f-body);font-siz
 /* ================= NAVBAR ================= */
 nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:1.4rem 2.5rem;transition:background .5s,backdrop-filter .5s,border-bottom .5s}
 nav.bg{background:rgba(5,5,5,0.85);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,255,255,0.05)}
-.nav-logo{font-family:var(--f-display);font-size:1.25rem;font-weight:800;letter-spacing:-0.02em;color:var(--paper);text-decoration:none}
+.nav-logo{font-family:var(--f-display);font-size:1.25rem;font-weight:800;letter-spacing:-0.02em;color:var(--paper);text-decoration:none;position:relative;z-index:202}
 .nav-logo sup{font-size:.45em;font-weight:600;letter-spacing:.08em;vertical-align:super;color:var(--yellow)}
 .nav-links{display:flex;align-items:center;gap:2.25rem;list-style:none}
 .nav-links a{font-size:.85rem;font-weight:500;letter-spacing:.02em;color:rgba(255,255,255,.6);text-decoration:none;transition:color .2s}
 .nav-links a:hover{color:var(--paper)}
 .nav-btn{background:var(--paper);color:var(--ink) !important;font-family:var(--f-body);font-size:.85rem;font-weight:600;padding:.6rem 1.4rem;border-radius:100px;text-decoration:none;transition:background .2s,transform .2s var(--ease);display:inline-flex;align-items:center;gap:.4rem}
 .nav-btn:hover{background:var(--yellow);transform:scale(1.03)}
+.mobile-toggle{display:none;background:none;border:none;color:var(--paper);position:relative;z-index:202;width:30px;height:24px;cursor:none}
+.mobile-toggle span{display:block;width:100%;height:2px;background:var(--paper);position:absolute;transition:all .3s var(--ease)}
+.mobile-toggle span:nth-child(1){top:0}
+.mobile-toggle span:nth-child(2){top:11px}
+.mobile-toggle span:nth-child(3){bottom:0}
+.mobile-toggle.active span:nth-child(1){transform:rotate(45deg);top:11px}
+.mobile-toggle.active span:nth-child(2){opacity:0}
+.mobile-toggle.active span:nth-child(3){transform:rotate(-45deg);bottom:11px}
 
 /* ================= ANIMATIONS ================= */
 @keyframes rise{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
@@ -112,7 +120,7 @@ nav.bg{background:rgba(5,5,5,0.85);backdrop-filter:blur(20px);-webkit-backdrop-f
 .split-link{display:inline-flex;align-items:center;gap:.5rem;font-size:.9rem;font-weight:600;margin-top:2.5rem;text-decoration:none;transition:gap .2s var(--ease)}
 .split-link svg{transition:transform .2s var(--ease)}
 .split-link:hover{gap:.85rem}
-.split-visual{display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
+.split-visual{display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;padding:2rem}
 
 .split.dark .split-text{background:var(--ink);color:var(--paper)}
 .split.dark .split-eyebrow{color:var(--yellow)}
@@ -125,17 +133,17 @@ nav.bg{background:rgba(5,5,5,0.85);backdrop-filter:blur(20px);-webkit-backdrop-f
 .split.light .split-visual{background:#F7F7F7}
 
 /* DASHBOARD MOCKUP */
-.dash-mock{width:min(440px,88%);background:#fff;border-radius:16px;box-shadow:0 40px 100px rgba(0,0,0,.3),0 10px 30px rgba(0,0,0,.1);overflow:hidden;color:#111}
+.dash-mock{width:min(440px,100%);background:#fff;border-radius:16px;box-shadow:0 40px 100px rgba(0,0,0,.3),0 10px 30px rgba(0,0,0,.1);overflow:hidden;color:#111}
 .dash-bar{background:#F9F9F9;border-bottom:1px solid #EAEAEA;padding:12px 16px;display:flex;align-items:center;gap:8px}
 .dash-dot{width:12px;height:12px;border-radius:50%}
 .dash-url{flex:1;background:#EAEAEA;border-radius:6px;padding:6px 12px;font-size:11px;color:#666;text-align:center;font-weight:500}
-.dash-body{padding:24px}
+.dash-body{padding:clamp(12px, 4vw, 24px)}
 .dash-toprow{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px}
 .dash-store-name{font-family:var(--f-display);font-size:16px;font-weight:800}
 .dash-badge{font-size:10px;font-weight:700;padding:4px 10px;border-radius:100px;background:var(--yellow-light);color:#111;letter-spacing:.04em}
-.dash-metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:24px}
-.dash-metric{background:#F9F9F9;border-radius:10px;padding:12px}
-.dash-metric-v{font-family:var(--f-display);font-size:20px;font-weight:800}
+.dash-metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(6px, 2vw, 10px);margin-bottom:24px}
+.dash-metric{background:#F9F9F9;border-radius:10px;padding:clamp(8px, 2vw, 12px)}
+.dash-metric-v{font-family:var(--f-display);font-size:clamp(16px, 4vw, 20px);font-weight:800}
 .dash-metric-l{font-size:10px;color:#666;margin-top:2px;font-weight:500}
 .dash-metric-d{font-size:10px;font-weight:700;margin-top:4px}
 .dash-orders-title{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#888;margin-bottom:12px;font-family:var(--f-display)}
@@ -148,7 +156,7 @@ nav.bg{background:rgba(5,5,5,0.85);backdrop-filter:blur(20px);-webkit-backdrop-f
 .dash-order-status{font-size:10px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;padding:4px 8px;border-radius:100px;margin-left:8px}
 
 /* CATALOG MOCKUP */
-.catalog-mock{width:min(400px,88%);display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.catalog-mock{width:min(400px,100%);display:grid;grid-template-columns:1fr 1fr;gap:12px}
 .cat-card{background:#fff;border-radius:14px;overflow:hidden;box-shadow:0 10px 30px rgba(0,0,0,.08);transition:transform .3s var(--ease);color:#111}
 .cat-card:hover{transform:translateY(-4px)}
 .cat-img{height:100px;display:flex;align-items:center;justify-content:center;font-size:2.2rem}
@@ -324,7 +332,20 @@ footer{background:#000;border-top:1px solid rgba(255,255,255,.05);padding:4rem 2
 /* ================= RESPONSIVE ================= */
 @media(max-width:960px){
   nav{padding:1.2rem 1.5rem}
-  .nav-links{display:none}
+  
+  /* Mobile Menu Styles */
+  .mobile-toggle {display:block}
+  .nav-links{
+    position:fixed; top:0; left:0; width:100%; height:100vh;
+    background:rgba(5,5,5,0.98); backdrop-filter:blur(15px); -webkit-backdrop-filter:blur(15px);
+    flex-direction:column; justify-content:center; gap:2.5rem;
+    transform:translateY(-100%); transition:transform 0.4s cubic-bezier(0.16,1,0.3,1);
+    z-index:201; opacity:0; pointer-events:none;
+  }
+  .nav-links.active{transform:translateY(0); opacity:1; pointer-events:auto;}
+  .nav-links a{font-size:1.5rem; color:var(--paper);}
+  .nav-btn{font-size:1.1rem; padding:1rem 2rem;}
+
   .split{grid-template-columns:1fr;min-height:auto}
   .split.flip{direction:ltr}
   .split-text{padding:5rem 2rem}
@@ -347,6 +368,9 @@ footer{background:#000;border-top:1px solid rgba(255,255,255,.05);padding:4rem 2
   .num-block{border-left:none !important;padding:2rem 0 !important}
   .statement{padding:8rem 1.5rem}
   .goods-item{width:280px;height:180px}
+  .dash-body{padding:16px}
+  .dash-metric{padding:8px}
+  .dash-order-amt{font-size:12px}
 }
 </style>
 </head>
@@ -357,11 +381,14 @@ footer{background:#000;border-top:1px solid rgba(255,255,255,.05);padding:4rem 2
 <!-- NAV -->
 <nav id="nav">
   <a href="#" class="nav-logo">Jalo Shops<sup>BETA</sup></a>
-  <ul class="nav-links">
-    <li><a href="#features">Fonctionnalités</a></li>
-    <li><a href="#pricing">Tarifs</a></li>
-    <li><a href="#">Se connecter</a></li>
-    <li><a href="#pricing" class="nav-btn">Commencer <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 12 12"><line x1="2" y1="6" x2="10" y2="6"/><polyline points="7,3 10,6 7,9"/></svg></a></li>
+  <button class="mobile-toggle" id="mobileToggle" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#features" class="nav-item">Fonctionnalités</a></li>
+    <li><a href="#pricing" class="nav-item">Tarifs</a></li>
+    <li><a href="#" class="nav-item">Se connecter</a></li>
+    <li><a href="#pricing" class="nav-btn nav-item">Commencer <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 12 12"><line x1="2" y1="6" x2="10" y2="6"/><polyline points="7,3 10,6 7,9"/></svg></a></li>
   </ul>
 </nav>
 
@@ -654,7 +681,7 @@ document.addEventListener('mousemove', e => {
   cursor.style.left = e.clientX + 'px';
   cursor.style.top = e.clientY + 'px';
 });
-document.querySelectorAll('a, button, .cat-card, .pay-chip, .proof-pill').forEach(el => {
+document.querySelectorAll('a, button, .cat-card, .pay-chip, .proof-pill, .mobile-toggle').forEach(el => {
   el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
   el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
 });
@@ -664,6 +691,25 @@ const nav = document.getElementById('nav');
 window.addEventListener('scroll', () => {
   nav.classList.toggle('bg', window.scrollY > 50);
 }, { passive: true });
+
+// MOBILE MENU TOGGLE
+const mobileToggle = document.getElementById('mobileToggle');
+const navLinks = document.getElementById('navLinks');
+const navItems = document.querySelectorAll('.nav-item');
+
+mobileToggle.addEventListener('click', () => {
+  mobileToggle.classList.toggle('active');
+  navLinks.classList.toggle('active');
+  document.body.style.overflow = navLinks.classList.contains('active') ? 'hidden' : '';
+});
+
+navItems.forEach(item => {
+  item.addEventListener('click', () => {
+    mobileToggle.classList.remove('active');
+    navLinks.classList.remove('active');
+    document.body.style.overflow = '';
+  });
+});
 
 // INTERSECTION OBSERVER FOR REVEAL ANIMATIONS
 const observerOptions = {
